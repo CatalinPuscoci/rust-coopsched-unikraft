@@ -1,5 +1,6 @@
-# unikraft-rust
-Rust application template for the unikraft kernel
+# unikraft: rusty cooperative Scheduler
+
+WIP
 
 This template compiles the rust code as a statc library and links it into the uni kernel.
 
