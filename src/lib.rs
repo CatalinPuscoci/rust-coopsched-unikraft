@@ -4,10 +4,11 @@
 
 use std::cmp::Ordering;
 //use std::thread;
-//use libc;
+use libc;
 //use priority_queue::PriorityQueue;
 use std::collections::BinaryHeap;
-use std::thread::{current, sleep};
+use lazy_static::lazy_static;
+
 
 struct SchedCoop {
     current: Thread,
@@ -42,8 +43,13 @@ struct uk_thread_attr_t {
     timeslice: u32,
 }
 
-#[repr(C)]
-struct uk_thread {}
+//#[repr(C)]
+//struct uk_thread<'a> {
+//    name: *mut libc::c_char,
+//    stack: *mut libc::c_void,
+//    tls: *mut libc::c_void,
+//    ctx: *mut libc::c_void,
+//}
 
 
 #[repr(C)]
@@ -177,5 +183,11 @@ impl PartialOrd<Self> for Thread {
 impl Ord for Thread {
     fn cmp(&self, other: &Self) -> Ordering {
         other.wakeup_time.cmp(&self.wakeup_time)
+    }
+}
+
+fn rust_init_sched(){
+    lazy_static!{
+    static ref SCHEDCOOP: SchedCoop = SchedCoop::new();
     }
 }

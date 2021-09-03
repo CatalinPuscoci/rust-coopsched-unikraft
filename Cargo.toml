@@ -2,13 +2,16 @@
 name = "rust"
 version = "0.1.0"
 edition = "2018"
-authors = ["Dennis Kobert"]
+build = "src/build.rs"
 
 [lib]
 name = "rust"
 crate-type = ["staticlib"]
 
+[build-dependencies]
+bindgen = "0.59.1"
 
 [dependencies]
 libc = "0.2.101"
 priority-queue = "1.1.0"
+lazy_static = "1.4.0"
