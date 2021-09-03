@@ -82,10 +82,10 @@ impl SchedCoop {
     fn update_sleeping(&mut self) {
         self.crt_clock += 1;
         loop {
-            let mut i = self.sleeping_threads.peek();
+            let i = self.sleeping_threads.peek();
             match i {
                 None => { return }
-                Some(mut t) => {
+                Some(t) => {
                     if t.wakeup_time < self.crt_clock {
                         self.thread_list.push(self.sleeping_threads.pop().unwrap());
                     } else {
@@ -96,7 +96,7 @@ impl SchedCoop {
         }
     }
     fn choose_next(mut self) -> Thread {
-        let mut next;
+        let next;
         if !self.thread_list.is_empty() {
             next = self.thread_list.pop().unwrap();
             if let Some(name) = self.current.name.clone() {
@@ -130,13 +130,13 @@ impl SchedCoop {
         if t.runnable {
             return
         }
-        if self.sleeping_threads.iter().find(|x| x.eq(&t)).is_some() {
+        if self.sleeping_threads.iter().find(|&x| x.eq(&t)).is_some() {
             self.sleeping_threads.retain(|x| !x.eq(&t));
         }
         t.wakeup_time = 0;
         t.runnable = true;
         if self.current != t || t.queueable == true {
-            t.queueable == false;
+            t.queueable = false;
             self.thread_list.push(t);
         }
     }
