@@ -1,4 +1,4 @@
-
+#define NULL 0
 #include <uk/print.h>
 #include <uk/arch/types.h>
 #include <uk/arch/time.h>
