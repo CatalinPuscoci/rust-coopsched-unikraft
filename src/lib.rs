@@ -9,6 +9,7 @@ use libc;
 use std::collections::BinaryHeap;
 use lazy_static::lazy_static;
 
+include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 struct SchedCoop {
     current: Thread,
@@ -55,7 +56,7 @@ struct uk_thread_attr_t {
 #[repr(C)]
 struct uk_sched {
     yyield: extern fn(s: uk_sched),
-    thread_add: extern fn(s: uk_sched, t: uk_thread) -> u32,
+    thread_add: extern fn(s: uk_sched, t: ()) -> u32,
 }
 
 #[no_mangle]

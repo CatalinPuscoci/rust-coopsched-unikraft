@@ -26,18 +26,18 @@ fn main() {
         .clang_arg("-I../../libs/lib-newlib/musl-imported/include")
         .clang_arg("-I../../unikraft/lib/ukdebug/include")
         .clang_arg("-I../../unikraft/include")
+        .clang_arg("../../unikraft/lib/nolibc/include/")
         .clang_arg("-I../../unikraft/arch/x86/x86_64/include")
         .clang_arg("-I../../unikraft/include/uk")
         .clang_arg("-I../../unikraft/plat/kvm/include")
         .clang_arg("-I../../unikraft/include/uk/plat")
-        .clang_arg("-I../../unikraft/lib/nolibc/")
         .clang_arg("-I./build/include")
         .clang_arg("-I../../unikraft/lib/ukalloc/include")
         .clang_arg("-I../../unikraft/lib/uktime/include")
         .clang_arg("-I../../unikraft/lib/uksched/include")
         .clang_arg("-I../../unikraft/lib/uksignal/include")
         .clang_arg("-I../../unikraft/lib/ukschedcoop/include")
-        .clang_arg("-target").clang_arg("x86_64-unknown-redox");
+        .clang_arg("-target").clang_arg("x86_64-unknown-linux-gnu");
         //.clang_arg("-I../../../unikraft/include")
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
@@ -46,7 +46,7 @@ fn main() {
         .generate()
         // Unwrap the Result and panic on failure.
         .expect("Unable to generate bindings")
-        .write_to_file(out_path)
+        .write_to_file(out_path.join("bindings.rs"))
         .expect("Couldn't write bindings!");
 
 
